@@ -43,6 +43,7 @@ html, body {
 /* 시작 화면 */
 #start-screen {
     position: relative;
+    display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -586,48 +587,4 @@ input:focus {
     padding: 10px 20px;
     border-radius: 5px;
     z-index: 1200;
-}
-
-/* 모드 선택 버튼 스타일 추가 */
-#single-mode-button,
-#battle-mode-button {
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin: 5px;
-}
-
-#single-mode-button:hover,
-#battle-mode-button:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-/* 배틀모드 관련 스타일 추가 */
-.player-score {
-    color: #ffffff;
-    margin: 0 10px;
-}
-
-.round-info {
-    color: #ffffff;
-    font-size: 1.2rem;
-}
-
-/* 설정 화면 레이아웃 보완 */
-#single-settings-screen,
-#battle-settings-screen {
-    padding: 20px;
-}
-
-.settings-wrapper {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 10px;
-    width: 100%;
-    max-width: 400px;
 }
