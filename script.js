@@ -27,8 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // 클릭된 버튼에 selected 클래스 추가
             btn.classList.add('selected');
             // 해당 모드의 점수 표시
-            display
-            (btn.dataset.mode);
+            displayHighScores(btn.dataset.mode);
         });
     });
 
