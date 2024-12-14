@@ -11,16 +11,17 @@
         <!-- 시작 화면 -->
         <div class="screen" id="start-screen">
             <h1 class="game-title">PRIME WAR</h1>
-            <button class="btn" id="start-button">START</button>
+            <button class="btn" id="single-mode-button">SINGLE MODE</button>
+            <button class="btn" id="battle-mode-button">BATTLE MODE</button>
         </div>
 
-        <!-- 설정 화면 -->
-        <div class="screen" id="settings-screen">
+        <!-- 싱글 모드 설정 화면 -->
+        <div class="screen" id="single-settings-screen">
             <div class="settings-wrapper">
-                <h2>Setting</h2>
+                <h2>Single Mode Setting</h2>
                 <div class="setting-group">
                     <label>게임판:</label>
-                    <select id="game-mode-select">
+                    <select id="single-game-mode-select">
                         <option value="3">3 x 3</option>
                         <option value="4">4 x 4</option>
                         <option value="5">5 x 5</option>
@@ -28,7 +29,7 @@
                 </div>
                 <div class="setting-group">
                     <label>시간제한:</label>
-                    <select id="time-limit-select">
+                    <select id="single-time-limit-select">
                         <option value="40">40초</option>
                         <option value="30">30초</option>
                         <option value="20">20초</option>
@@ -46,13 +47,53 @@
                 <div class="setting-group">
                     <label>숫자 범위:</label>
                     <div class="range-inputs">
-                        <!-- 기존 input을 select로 변경 -->
-                        <select id="range-start-select"></select>
-                        <select id="range-end-select"></select>
+                        <select id="single-range-start-select"></select>
+                        <select id="single-range-end-select"></select>
                     </div>
                 </div>
                 <div class="container">
-                    <button id="start-game-button">Start Game</button>
+                    <button id="start-single-game-button">Start Game</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 배틀 모드 설정 화면 -->
+        <div class="screen" id="battle-settings-screen">
+            <div class="settings-wrapper">
+                <h2>Battle Mode Setting</h2>
+                <div class="setting-group">
+                    <label>게임판:</label>
+                    <select id="battle-game-mode-select">
+                        <option value="3">3 x 3</option>
+                        <option value="4">4 x 4</option>
+                        <option value="5">5 x 5</option>
+                    </select>
+                </div>
+                <div class="setting-group">
+                    <label>시간제한:</label>
+                    <select id="battle-time-limit-select">
+                        <option value="40">40초</option>
+                        <option value="30">30초</option>
+                        <option value="20">20초</option>
+                    </select>
+                </div>
+                <div class="setting-group">
+                    <label>라운드:</label>
+                    <select id="round-count-select">
+                        <option value="3">3 라운드</option>
+                        <option value="5">5 라운드</option>
+                        <option value="7">7 라운드</option>
+                    </select>
+                </div>
+                <div class="setting-group">
+                    <label>숫자 범위:</label>
+                    <div class="range-inputs">
+                        <select id="battle-range-start-select"></select>
+                        <select id="battle-range-end-select"></select>
+                    </div>
+                </div>
+                <div class="container">
+                    <button id="start-battle-game-button">Start Battle</button>
                 </div>
             </div>
         </div>
@@ -60,9 +101,13 @@
         <!-- 게임 화면 -->
         <div class="screen" id="game-screen">
             <div class="info-panel">
+                <div class="round-info" id="round-info"></div>
                 <div class="hearts" id="hearts-container">❤️❤️</div>
                 <div class="timer" id="timer-container">40초</div>
-                <div class="score-panel">점수: <span id="score">0</span></div>
+                <div class="score-panel">
+                    <div id="player-a-score" class="player-score">A: 0</div>
+                    <div id="player-b-score" class="player-score">B: 0</div>
+                </div>
             </div>
             <div class="board-container">
                 <div class="board" id="game-board"></div>
@@ -76,6 +121,7 @@
         <div class="screen" id="gameover-screen">
             <div class="gameover-content">
                 <h2>Game Over</h2>
+                <div class="battle-result" id="battle-result"></div>
                 <div class="final-score">SCORE: <span id="final-score">0</span></div>
                 <div class="high-scores-container">
                     <div class="mode-buttons">
@@ -87,16 +133,6 @@
                 </div>
                 <button class="btn" id="restart-button">게임 다시하기</button>
                 <button class="btn" id="clear-records-button">관리자 모드</button>
-            </div>
-            <div class="confirm-dialog" id="confirm-dialog" style="display: none;">
-                <div class="dialog-content">
-                    <h3>확인</h3>
-                    <p>정말 모든 기록을 초기화하시겠습니까?</p>
-                    <div class="button-group">
-                        <button id="confirm-yes">예</button>
-                        <button id="confirm-no">아니오</button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
