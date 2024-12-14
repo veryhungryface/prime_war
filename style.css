@@ -588,3 +588,69 @@ input:focus {
     border-radius: 5px;
     z-index: 1200;
 }
+
+/* 배틀모드 추가 스타일 */
+#single-mode-button,
+#battle-mode-button {
+    background: linear-gradient(45deg, #1e88e5, #1565c0);
+    color: #ffffff;
+    padding: 0.4rem 2.0rem;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+#single-mode-button:hover,
+#battle-mode-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    background: linear-gradient(45deg, #1976d2, #1565c0);
+}
+
+#battle-settings-screen {
+    padding: 20px;
+}
+
+.board.player-a-turn {
+    border: 5px solid #ff4444;
+}
+
+.board.player-b-turn {
+    border: 5px solid #4444ff;
+}
+
+.round-info {
+    color: #ffffff;
+    font-size: 1.2rem;
+}
+
+.player-score {
+    color: #ffffff;
+    margin: 0 10px;
+}
+
+.battle-result {
+    font-size: 1.5rem;
+    margin: 20px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.battle-result.winner {
+    background: rgba(76, 175, 80, 0.2);
+    color: #4CAF50;
+}
+
+.battle-result.draw {
+    background: rgba(255, 235, 59, 0.2);
+    color: #FDD835;
+}
