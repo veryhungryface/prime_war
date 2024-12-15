@@ -378,15 +378,13 @@ document.addEventListener('DOMContentLoaded', () => {
         gameElements.playerBScore.style.display = 'block';
         gameElements.roundInfo.textContent = `Round ${gameState.currentRound}/${gameState.rounds}`;
         
-        // 점수 표시에 클래스 추가
-        gameElements.playerAScore.className = 'player-score player-a-score';
-        gameElements.playerBScore.className = 'player-score player-b-score';
-        
         gameElements.playerAScore.textContent = `RED: ${gameState.playerAScore}`;
         gameElements.playerBScore.textContent = `BLUE: ${gameState.playerBScore}`;
         
         // 게임보드 테두리 색상 업데이트
-        gameElements.board.className = `board player-${gameState.currentPlayer.toLowerCase()}-turn`;
+        const board = document.getElementById('game-board');
+        board.classList.remove('player-a-turn', 'player-b-turn');
+        board.classList.add(`player-${gameState.currentPlayer.toLowerCase()}-turn`);
     }
 
     gameElements.timer.textContent = `${gameState.timeLeft}초`;
