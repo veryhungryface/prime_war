@@ -425,30 +425,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function endGame() {
-        gameState.active = false;
-        if (gameState.timer) clearInterval(gameState.timer);
-        
-        if (gameState.mode === 'single') {
-            gameElements.finalScore.textContent = gameState.score;
-            checkAndSaveHighScore(gameState.score);
+    gameState.active = false;
+    if (gameState.timer) clearInterval(gameState.timer);
+    
+    if (gameState.mode === 'single') {
+        gameElements.finalScore.textContent = gameState.score;
+        checkAndSaveHighScore(gameState.score);
+    } else {
+        // 배틀 모드에서는 서버 저장 X
+        // RED, BLUE 최종 점수 표시
+        let resultText;
+        if (gameState.playerAScore > gameState.playerBScore) {
+            resultText = "RED Wins!";
+        } else if (gameState.playerBScore > gameState.playerAScore) {
+            resultText = "BLUE Wins!";
         } else {
-            let resultText;
-            if (gameState.playerAScore > gameState.playerBScore) {
-                resultText = "RED Wins!";
-            } else if (gameState.playerBScore > gameState.playerAScore) {
-                resultText = "BLUE Wins!";
-            } else {
-                resultText = "Draw!";
-            }
-            
-            const battleResult = document.getElementById('battle-result');
-            battleResult.textContent = resultText;
-            battleResult.className = 'battle-result ' + 
-                (resultText === "Draw!" ? 'draw' : 'winner');
+            resultText = "Draw!";
         }
         
-        showScreen('gameover');
+        const battleResult = document.getElementById('battle-result');
+        battleResult.textContent = resultText;
+        battleResult.className = 'battle-result ' + 
+            (resultText === "Draw!" ? 'draw' : 'winner');
+
+        // 최종 점수를 RED vs BLUE 형식으로 표시
+        gameElements.finalScore.textContent = `RED: ${gameState.playerAScore} vs BLUE: ${gameState.playerBScore}`;
     }
+    
+    showScreen('gameover');
+}
 
     async function checkAndSaveHighScore(score) {
         try {
