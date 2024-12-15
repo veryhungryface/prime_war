@@ -540,51 +540,7 @@ input:focus {
     z-index: 1200;
 }
 
-/* 배틀모드 추가 스타일 */
-#single-mode-button,
-#battle-mode-button {
-    background: linear-gradient(45deg, #1e88e5, #1565</antArtifact>
-    
-/* 배틀모드 보더 스타일 */
-.board#game-board.player-a-turn {
+/* 게임 화면 내의 보드 테두리 스타일과 점수 패널 */
+#game-screen div.board-container div.board#game-board.player-a-turn {
     border: 5px solid #ff4444 !important;
-    box-shadow: 0 0 10px #ff4444;
-}
-
-.board#game-board.player-b-turn {
-    border: 5px solid #4444ff !important;
-    box-shadow: 0 0 10px #4444ff;
-}
-
-/* 배틀모드 점수 색상 */
-.player-score#player-a-score {
-    color: #ff4444 !important;
-    font-weight: bold;
-    text-shadow: 0 0 5px rgba(255, 68, 68, 0.3);
-}
-
-.player-score#player-b-score {
-    color: #4444ff !important;
-    font-weight: bold;
-    text-shadow: 0 0 5px rgba(68, 68, 255, 0.3);
-}
-
-/* 게임 화면 내의 보드 테두리 스타일 */
-#game-screen .board-container .board.player-a-turn {
-    border: 5px solid #ff4444 !important;
-}
-
-#game-screen .board-container .board.player-b-turn {
-    border: 5px solid #4444ff !important;
-}
-
-/* 점수 패널 스타일 */
-.score-panel #player-a-score {
-    color: #ff4444 !important;
-    font-weight: bold;
-}
-
-.score-panel #player-b-score {
-    color: #4444ff !important;
-    font-weight: bold;
-}
+    box-shadow:
