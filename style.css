@@ -544,3 +544,23 @@ input:focus {
 #single-mode-button,
 #battle-mode-button {
     background: linear-gradient(45deg, #1e88e5, #1565</antArtifact>
+    
+/* 배틀모드 보더 스타일 */
+.board.player-a-turn {
+    border: 5px solid #ff4444 !important;
+}
+
+.board.player-b-turn {
+    border: 5px solid #4444ff !important;
+}
+
+/* 배틀모드 점수 색상 */
+.player-a-score {
+    color: #ff4444;
+    font-weight: bold;
+}
+
+.player-b-score {
+    color: #4444ff;
+    font-weight: bold;
+}
