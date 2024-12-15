@@ -448,8 +448,8 @@ document.addEventListener('DOMContentLoaded', () => {
         battleResult.className = 'battle-result ' + 
             (resultText === "Draw!" ? 'draw' : 'winner');
 
-        // 최종 점수를 RED vs BLUE 형식으로 표시
-        gameElements.finalScore.textContent = `RED: ${gameState.playerAScore} vs BLUE: ${gameState.playerBScore}`;
+        // 최종 점수를 RED BLUE 표시
+        gameElements.finalScore.textContent = `RED: ${gameState.playerAScore} BLUE: ${gameState.playerBScore}`;
     }
     
     showScreen('gameover');
