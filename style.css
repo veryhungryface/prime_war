@@ -257,7 +257,6 @@ button#start-game-button:hover {
 }
 
 .cell {
-    font-size: clamp(0.5rem, 4vw, 4rem);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -267,6 +266,7 @@ button#start-game-button:hover {
     border-radius: 4px;
     user-select: none;
     transition: all 0.3s ease;
+    /* font-size: 제거 혹은 매우 작은 값으로 */
 }
 
 .cell:hover {
@@ -565,4 +565,10 @@ input:focus {
     color: #4444ff !important;
     font-weight: bold;
     text-shadow: 0 0 5px rgba(68, 68, 255, 0.3);
+}
+
+#game-screen .info-panel .single-score-container div#score {
+    color: #ff4444 !important;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(255, 68, 68, 0.3);
 }
