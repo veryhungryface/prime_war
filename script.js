@@ -378,14 +378,13 @@ document.addEventListener('DOMContentLoaded', () => {
         gameElements.playerBScore.style.display = 'block';
         gameElements.roundInfo.textContent = `Round ${gameState.currentRound}/${gameState.rounds}`;
         
-        gameElements.playerAScore.textContent = `RED: ${gameState.playerAScore}`;
-        gameElements.playerBScore.textContent = `BLUE: ${gameState.playerBScore}`;
+        // 플레이어 점수 업데이트
+        document.getElementById('player-a-score').textContent = `RED: ${gameState.playerAScore}`;
+        document.getElementById('player-b-score').textContent = `BLUE: ${gameState.playerBScore}`;
         
         // 게임보드 테두리 색상 업데이트
         const board = document.getElementById('game-board');
-        // 모든 턴 관련 클래스 제거
         board.classList.remove('player-a-turn', 'player-b-turn');
-        // 현재 플레이어의 턴 클래스 추가
         board.classList.add(`player-${gameState.currentPlayer.toLowerCase()}-turn`);
     }
 
