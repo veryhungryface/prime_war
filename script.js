@@ -434,9 +434,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             let resultText;
             if (gameState.playerAScore > gameState.playerBScore) {
-                resultText = "Player A Wins!";
+                resultText = "RED Wins!";
             } else if (gameState.playerBScore > gameState.playerAScore) {
-                resultText = "Player B Wins!";
+                resultText = "BLUE Wins!";
             } else {
                 resultText = "Draw!";
             }
