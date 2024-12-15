@@ -304,15 +304,24 @@ function adjustFontSizes() {
     });
 }
 
+    function resetTimerBar() {
+        const timerBar = document.getElementById('timer-bar');
+        gameState.timeLeft = gameState.timeLimit; // 남은 시간을 초기화
+        timerBar.style.width = '100%'; // 바 가득 채우기
+        timerBar.style.backgroundColor = 'white'; // 색상 초기화
+    }
+
     function handleCellClick(cell, num) {
         if (!gameState.active || gameState.clicked.has(num)) return;
         
         gameState.clicked.add(num);
+        resetTimerBar();
         
         if (gameState.primeMap[num]) {
             cell.style.backgroundColor = '#0066cc';
             if (gameState.mode === 'single') {
-                gameState.score += 10;
+                gameState.score += 10;    
+ 
             } else {
                 if (gameState.currentPlayer === 'A') {
                     gameState.playerAScore += 10;
@@ -358,7 +367,9 @@ function adjustFontSizes() {
 
     function handleNoMorePrimes() {
         if (!gameState.active) return;
-
+        
+        resetTimerBar();
+            
         const unclickedPrimes = gameState.numbers.filter(num => 
             gameState.primeMap[num] && !gameState.clicked.has(num)
         );
@@ -412,6 +423,7 @@ function adjustFontSizes() {
         if (gameState.mode === 'single') {
             gameElements.hearts.style.display = 'block';
             gameElements.roundInfo.style.display = 'none';
+            gameElements.timer.style.display = 'none';
             gameElements.score.style.display = 'block';
             gameElements.score.textContent = `Score: ${gameState.score}`;
             gameElements.hearts.textContent = '❤️'.repeat(gameState.hearts);
@@ -419,6 +431,7 @@ function adjustFontSizes() {
             gameElements.playerBScore.style.display = 'none';
         } else {
             gameElements.hearts.style.display = 'none';
+            gameElements.timer.style.display = 'none';
             gameElements.score.style.display = 'none';
             gameElements.roundInfo.style.display = 'block';
             gameElements.playerAScore.style.display = 'block';
@@ -437,29 +450,47 @@ function adjustFontSizes() {
     }
     
     function startTimer() {
-        gameState.timeLeft = gameState.timeLimit;
+    gameState.timeLeft = gameState.timeLimit;
+    updateGameUI();
+
+    const timerBar = document.getElementById('timer-bar');
+    const timerDuration = gameState.timeLimit;
+
+    clearInterval(gameState.timer);
+
+    gameState.timer = setInterval(() => {
+        gameState.timeLeft--;
+
+        // 타이머 바 너비 업데이트
+        const percentage = (gameState.timeLeft / timerDuration) * 100;
+        timerBar.style.width = `${percentage}%`;
+
+        // 10초 이하일 때 바의 색상 변경
+        if (gameState.timeLeft <= 10) {
+            timerBar.style.backgroundColor = 'red';
+        } else {
+            timerBar.style.backgroundColor = 'white';
+        }
+
         updateGameUI();
-        
-        gameState.timer = setInterval(() => {
-            gameState.timeLeft--;
-            updateGameUI();
-            
-            if (gameState.timeLeft <= 0) {
-                if (gameState.mode === 'single') {
-                    gameState.hearts--;
-                    if (gameState.hearts <= 0) {
-                        endGame();
-                    } else {
-                        resetTimer();
-                    }
+
+        if (gameState.timeLeft <= 0) {
+            clearInterval(gameState.timer);
+            if (gameState.mode === 'single') {
+                gameState.hearts--;
+                if (gameState.hearts <= 0) {
+                    endGame();
                 } else {
-                    switchPlayer();
                     resetTimer();
                 }
-                updateGameUI();
+            } else {
+                switchPlayer();
+                resetTimer();
             }
-        }, 1000);
-    }
+            updateGameUI();
+        }
+    }, 1000);
+}
 
     function resetTimer() {
         if (gameState.timer) clearInterval(gameState.timer);
