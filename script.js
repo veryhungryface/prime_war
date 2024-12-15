@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 서버 URL 설정
     const API_URL = 'http://107.172.92.109:8080/api';
 
     const screens = {
@@ -11,17 +10,16 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const buttons = {
-    singleMode: document.getElementById('single-mode-button'),
-    battleMode: document.getElementById('battle-mode-button'),
-    startSingleGame: document.getElementById('start-single-game-button'),
-    startBattleGame: document.getElementById('start-battle-game-button'),
-    noMorePrimes: document.getElementById('no-more-primes-btn'),
-    restart: document.getElementById('restart-button'),
-    // 관리자모드 버튼을 start 화면에 추가한 것에 따른 변수 추가
-    adminMode: document.getElementById('admin-mode-button'),
-    // 홈화면 버튼 변수 추가
-    homeButton: document.getElementById('home-button')
-};
+        singleMode: document.getElementById('single-mode-button'),
+        battleMode: document.getElementById('battle-mode-button'),
+        startSingleGame: document.getElementById('start-single-game-button'),
+        startBattleGame: document.getElementById('start-battle-game-button'),
+        noMorePrimes: document.getElementById('no-more-primes-btn'),
+        restart: document.getElementById('restart-button'),
+        adminMode: document.getElementById('admin-mode-button'),
+        homeButton: document.getElementById('home-button')
+        // clearRecords는 이제 사용하지 않으므로 제거
+    };
 
     const modeButtons = document.querySelectorAll('.mode-btn');
     modeButtons.forEach(btn => {
@@ -45,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
         highScores: document.getElementById('high-scores-list')
     };
 
-    // 싱글모드 설정
     const singleSettings = {
         modeSelect: document.getElementById('single-game-mode-select'),
         timeSelect: document.getElementById('single-time-limit-select'),
@@ -54,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
         rangeEndSelect: document.getElementById('single-range-end-select')
     };
 
-    // 배틀모드 설정
     const battleSettings = {
         modeSelect: document.getElementById('battle-game-mode-select'),
         timeSelect: document.getElementById('battle-time-limit-select'),
@@ -83,7 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
         clicked: new Set()
     };
 
-    // 이벤트 리스너 설정
     initializeEventListeners();
     initRangeSelects();
     showScreen('start');
@@ -104,10 +99,9 @@ document.addEventListener('DOMContentLoaded', () => {
         buttons.noMorePrimes.addEventListener('click', handleNoMorePrimes);
         buttons.restart.addEventListener('click', () => showScreen(gameState.mode === 'single' ? 'singleSettings' : 'battleSettings'));
 
-        // 관리자 모드 버튼
-        buttons.clearRecords.addEventListener('click', handleClearRecords);
+        // clearRecords는 더이상 사용하지 않으므로 제거
+        // buttons.clearRecords.addEventListener('click', handleClearRecords);
 
-        // range-start-select 변경 이벤트
         singleSettings.rangeStartSelect.addEventListener('change', () => {
             populateEndOptions(parseInt(singleSettings.rangeStartSelect.value), singleSettings.rangeEndSelect);
         });
@@ -115,12 +109,13 @@ document.addEventListener('DOMContentLoaded', () => {
         battleSettings.rangeStartSelect.addEventListener('change', () => {
             populateEndOptions(parseInt(battleSettings.rangeStartSelect.value), battleSettings.rangeEndSelect);
         });
-        
+
         buttons.adminMode.addEventListener('click', handleClearRecords);
-buttons.homeButton.addEventListener('click', () => {
-    showScreen('start');
+        buttons.homeButton.addEventListener('click', () => {
+            showScreen('start');
+        }); // 여기서 괄호를 제대로 닫아줌
     }
-    
+
     function showScreen(screenName) {
         Object.values(screens).forEach(screen => {
             screen.classList.remove('active');
@@ -136,22 +131,18 @@ buttons.homeButton.addEventListener('click', () => {
 
     function initRangeSelects() {
         [singleSettings, battleSettings].forEach(settings => {
-            // 시작 범위: 0, 100, 200, ... , 1000
             for (let i = 0; i <= 1000; i += 100) {
                 const option = document.createElement('option');
                 option.value = i;
                 option.textContent = i;
                 settings.rangeStartSelect.appendChild(option);
             }
-
-            // 시작값 0에 대한 끝 범위 기본 설정
             populateEndOptions(0, settings.rangeEndSelect);
         });
     }
 
     function populateEndOptions(startVal, endSelect) {
         endSelect.innerHTML = '';
-        // 끝 범위는 시작값+100 부터 100씩 증가 총 10개
         for (let j = 100; j <= 1000; j += 100) {
             const endVal = startVal + j;
             const option = document.createElement('option');
@@ -262,76 +253,73 @@ buttons.homeButton.addEventListener('click', () => {
     }
 
     function createBoard() {
-    const board = document.getElementById('game-board');
-    board.innerHTML = '';
-    board.style.gridTemplateColumns = `repeat(${gameState.boardSize}, 1fr)`;
-    board.style.gridTemplateRows = `repeat(${gameState.boardSize}, 1fr)`;
+        const board = document.getElementById('game-board');
+        board.innerHTML = '';
+        board.style.gridTemplateColumns = `repeat(${gameState.boardSize}, 1fr)`;
+        board.style.gridTemplateRows = `repeat(${gameState.boardSize}, 1fr)`;
 
-    gameState.numbers.forEach(num => {
-        const cell = document.createElement('div');
-        cell.className = 'cell';
-        cell.textContent = num;
-        cell.addEventListener('click', () => handleCellClick(cell, num));
-        board.appendChild(cell);
-    });
+        gameState.numbers.forEach(num => {
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            cell.textContent = num;
+            cell.addEventListener('click', () => handleCellClick(cell, num));
+            board.appendChild(cell);
+        });
 
-    if (gameState.mode === 'battle') {
-        // 먼저 모든 player 클래스 제거
-        board.classList.remove('player-a-turn', 'player-b-turn');
-        // 현재 플레이어에 해당하는 클래스 추가
-        board.classList.add(`player-${gameState.currentPlayer.toLowerCase()}-turn`);
+        if (gameState.mode === 'battle') {
+            board.classList.remove('player-a-turn', 'player-b-turn');
+            board.classList.add(`player-${gameState.currentPlayer.toLowerCase()}-turn`);
+        }
     }
-}
 
     function handleCellClick(cell, num) {
-    if (!gameState.active || gameState.clicked.has(num)) return;
-    
-    gameState.clicked.add(num);
-    
-    if (gameState.primeMap[num]) {
-        cell.style.backgroundColor = '#0066cc';
-        if (gameState.mode === 'single') {
-            gameState.score += 10;
-        } else {
-            if (gameState.currentPlayer === 'A') {
-                gameState.playerAScore += 10;
+        if (!gameState.active || gameState.clicked.has(num)) return;
+        
+        gameState.clicked.add(num);
+        
+        if (gameState.primeMap[num]) {
+            cell.style.backgroundColor = '#0066cc';
+            if (gameState.mode === 'single') {
+                gameState.score += 10;
             } else {
-                gameState.playerBScore += 10;
+                if (gameState.currentPlayer === 'A') {
+                    gameState.playerAScore += 10;
+                } else {
+                    gameState.playerBScore += 10;
+                }
+            }
+            cell.classList.add('found-prime');
+        } else {
+            cell.style.backgroundColor = '#cc0000';
+            if (gameState.mode === 'single') {
+                gameState.hearts--;
+            } else {
+                switchPlayer();
             }
         }
-        cell.classList.add('found-prime');
-    } else {
-        cell.style.backgroundColor = '#cc0000';
-        if (gameState.mode === 'single') {
-            gameState.hearts--;
-        } else {
-            switchPlayer();
-        }
-    }
-    
-    updateGameUI();
-    resetTimer();
-    
-    // 모든 셀이 클릭되었는지 확인
-    const totalCells = gameState.boardSize * gameState.boardSize;
-    if (gameState.clicked.size === totalCells) {
-        // 모든 셀이 클릭된 상태이면 no prime 처리 호출
-        setTimeout(() => {
-            handleNoMorePrimes();
-        }, 1000); // 1초 딜레이
-    } else {
         
+        updateGameUI();
+        resetTimer();
+        
+        const totalCells = gameState.boardSize * gameState.boardSize;
+        const allClicked = (gameState.clicked.size === totalCells);
+        const unclickedPrimes = gameState.numbers.filter(n => gameState.primeMap[n] && !gameState.clicked.has(n));
+        const noUnclickedPrimes = (unclickedPrimes.length === 0);
+
+        if (allClicked || noUnclickedPrimes) {
+            setTimeout(() => {
+                handleNoMorePrimes();
+            }, 1000); 
         }
     }
-
 
     function switchPlayer() {
-    gameState.currentPlayer = gameState.currentPlayer === 'A' ? 'B' : 'A';
-    const board = document.getElementById('game-board');
-    board.classList.remove('player-a-turn', 'player-b-turn');
-    board.classList.add(`player-${gameState.currentPlayer.toLowerCase()}-turn`);
-    updateGameUI();
-}
+        gameState.currentPlayer = gameState.currentPlayer === 'A' ? 'B' : 'A';
+        const board = document.getElementById('game-board');
+        board.classList.remove('player-a-turn', 'player-b-turn');
+        board.classList.add(`player-${gameState.currentPlayer.toLowerCase()}-turn`);
+        updateGameUI();
+    }
 
     function handleNoMorePrimes() {
         if (!gameState.active) return;
@@ -383,31 +371,29 @@ buttons.homeButton.addEventListener('click', () => {
     }
 
     function updateGameUI() {
-    if (gameState.mode === 'single') {
-        gameElements.hearts.style.display = 'block';
-        gameElements.roundInfo.style.display = 'none';
-        gameElements.playerAScore.style.display = 'none';
-        gameElements.playerBScore.style.display = 'none';
-        gameElements.hearts.textContent = '❤️'.repeat(gameState.hearts);
-    } else {
-        gameElements.hearts.style.display = 'none';
-        gameElements.roundInfo.style.display = 'block';
-        gameElements.playerAScore.style.display = 'block';
-        gameElements.playerBScore.style.display = 'block';
-        gameElements.roundInfo.textContent = `Round ${gameState.currentRound}/${gameState.rounds}`;
-        
-        // 점수 업데이트
-        gameElements.playerAScore.textContent = `RED: ${gameState.playerAScore}`;
-        gameElements.playerBScore.textContent = `BLUE: ${gameState.playerBScore}`;
-        
-        // 보드 테두리 색상 업데이트
-        const board = document.getElementById('game-board');
-        board.classList.remove('player-a-turn', 'player-b-turn');
-        board.classList.add(`player-${gameState.currentPlayer.toLowerCase()}-turn`);
-    }
+        if (gameState.mode === 'single') {
+            gameElements.hearts.style.display = 'block';
+            gameElements.roundInfo.style.display = 'none';
+            gameElements.playerAScore.style.display = 'none';
+            gameElements.playerBScore.style.display = 'none';
+            gameElements.hearts.textContent = '❤️'.repeat(gameState.hearts);
+        } else {
+            gameElements.hearts.style.display = 'none';
+            gameElements.roundInfo.style.display = 'block';
+            gameElements.playerAScore.style.display = 'block';
+            gameElements.playerBScore.style.display = 'block';
+            gameElements.roundInfo.textContent = `Round ${gameState.currentRound}/${gameState.rounds}`;
+            
+            gameElements.playerAScore.textContent = `RED: ${gameState.playerAScore}`;
+            gameElements.playerBScore.textContent = `BLUE: ${gameState.playerBScore}`;
+            
+            const board = document.getElementById('game-board');
+            board.classList.remove('player-a-turn', 'player-b-turn');
+            board.classList.add(`player-${gameState.currentPlayer.toLowerCase()}-turn`);
+        }
 
-    gameElements.timer.textContent = `${gameState.timeLeft}초`;
-}
+        gameElements.timer.textContent = `${gameState.timeLeft}초`;
+    }
     
     function startTimer() {
         gameState.timeLeft = gameState.timeLimit;
@@ -440,51 +426,44 @@ buttons.homeButton.addEventListener('click', () => {
     }
 
     function endGame() {
-    gameState.active = false;
-    if (gameState.timer) clearInterval(gameState.timer);
-    
-    // final-score 요소의 부모( .final-score )에 접근
-    const finalScoreContainer = gameElements.finalScore.parentNode;
+        gameState.active = false;
+        if (gameState.timer) clearInterval(gameState.timer);
+        
+        const finalScoreContainer = gameElements.finalScore.parentNode;
 
-    if (gameState.mode === 'single') {
-        // 싱글 모드에서는 SCORE: 표시
-        // 우선 SCORE: 문구가 없을 경우를 대비, 혹시 비어있으면 다시 채워줍니다.
-        // childNodes[0]가 텍스트 노드를 가리키며 여기에서 'SCORE: '를 설정
-        if (finalScoreContainer.childNodes[0]) {
-            finalScoreContainer.childNodes[0].textContent = 'SCORE: ';
+        if (gameState.mode === 'single') {
+            if (finalScoreContainer.childNodes[0]) {
+                finalScoreContainer.childNodes[0].textContent = 'SCORE: ';
+            } else {
+                finalScoreContainer.insertBefore(document.createTextNode('SCORE: '), gameElements.finalScore);
+            }
+            
+            gameElements.finalScore.textContent = gameState.score;
+            checkAndSaveHighScore(gameState.score);
         } else {
-            finalScoreContainer.insertBefore(document.createTextNode('SCORE: '), gameElements.finalScore);
+            if (finalScoreContainer.childNodes[0]) {
+                finalScoreContainer.childNodes[0].textContent = '';
+            }
+
+            let resultText;
+            if (gameState.playerAScore > gameState.playerBScore) {
+                resultText = "RED Wins!";
+            } else if (gameState.playerBScore > gameState.playerAScore) {
+                resultText = "BLUE Wins!";
+            } else {
+                resultText = "Draw!";
+            }
+
+            const battleResult = document.getElementById('battle-result');
+            battleResult.textContent = resultText;
+            battleResult.className = 'battle-result ' + 
+                (resultText === "Draw!" ? 'draw' : 'winner');
+
+            gameElements.finalScore.textContent = `RED: ${gameState.playerAScore} BLUE: ${gameState.playerBScore}`;
         }
         
-        gameElements.finalScore.textContent = gameState.score;
-        checkAndSaveHighScore(gameState.score);
-    } else {
-        // 배틀 모드에서는 SCORE: 문구 제거
-        if (finalScoreContainer.childNodes[0]) {
-            finalScoreContainer.childNodes[0].textContent = '';
-        }
-
-        // 승패 결과
-        let resultText;
-        if (gameState.playerAScore > gameState.playerBScore) {
-            resultText = "RED Wins!";
-        } else if (gameState.playerBScore > gameState.playerAScore) {
-            resultText = "BLUE Wins!";
-        } else {
-            resultText = "Draw!";
-        }
-
-        const battleResult = document.getElementById('battle-result');
-        battleResult.textContent = resultText;
-        battleResult.className = 'battle-result ' + 
-            (resultText === "Draw!" ? 'draw' : 'winner');
-
-        // 배틀모드 최종점수 표시 (SCORE:와 vs 제거)
-        gameElements.finalScore.textContent = `RED: ${gameState.playerAScore} BLUE: ${gameState.playerBScore}`;
+        showScreen('gameover');
     }
-    
-    showScreen('gameover');
-}
 
     async function checkAndSaveHighScore(score) {
         try {
@@ -600,8 +579,8 @@ buttons.homeButton.addEventListener('click', () => {
             
             const displayMode = specificMode || `${gameState.boardSize}x${gameState.boardSize}`;
             
-            const buttons = document.querySelectorAll('.mode-btn');
-            buttons.forEach(btn => {
+            const btns = document.querySelectorAll('.mode-btn');
+            btns.forEach(btn => {
                 btn.classList.toggle('selected', btn.dataset.mode === displayMode);
             });
     
