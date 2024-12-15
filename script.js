@@ -365,24 +365,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateGameUI() {
-        if (gameState.mode === 'single') {
-            gameElements.hearts.style.display = 'block';
-            gameElements.roundInfo.style.display = 'none';
-            gameElements.playerAScore.style.display = 'none';
-            gameElements.playerBScore.style.display = 'none';
-            gameElements.hearts.textContent = '❤️'.repeat(gameState.hearts);
-        } else {
-            gameElements.hearts.style.display = 'none';
-            gameElements.roundInfo.style.display = 'block';
-            gameElements.playerAScore.style.display = 'block';
-            gameElements.playerBScore.style.display = 'block';
-            gameElements.roundInfo.textContent = `Round ${gameState.currentRound}/${gameState.rounds}`;
-            gameElements.playerAScore.textContent = `A: ${gameState.playerAScore}`;
-            gameElements.playerBScore.textContent = `B: ${gameState.playerBScore}`;
-        }
-
-        gameElements.timer.textContent = `${gameState.timeLeft}초`;
+    if (gameState.mode === 'single') {
+        gameElements.hearts.style.display = 'block';
+        gameElements.roundInfo.style.display = 'none';
+        gameElements.playerAScore.style.display = 'none';
+        gameElements.playerBScore.style.display = 'none';
+        gameElements.hearts.textContent = '❤️'.repeat(gameState.hearts);
+    } else {
+        gameElements.hearts.style.display = 'none';
+        gameElements.roundInfo.style.display = 'block';
+        gameElements.playerAScore.style.display = 'block';
+        gameElements.playerBScore.style.display = 'block';
+        gameElements.roundInfo.textContent = `Round ${gameState.currentRound}/${gameState.rounds}`;
+        
+        // 점수 표시에 클래스 추가
+        gameElements.playerAScore.className = 'player-score player-a-score';
+        gameElements.playerBScore.className = 'player-score player-b-score';
+        
+        gameElements.playerAScore.textContent = `RED: ${gameState.playerAScore}`;
+        gameElements.playerBScore.textContent = `BLUE: ${gameState.playerBScore}`;
+        
+        // 게임보드 테두리 색상 업데이트
+        gameElements.board.className = `board player-${gameState.currentPlayer.toLowerCase()}-turn`;
     }
+
+    gameElements.timer.textContent = `${gameState.timeLeft}초`;
+}
     
     function startTimer() {
         gameState.timeLeft = gameState.timeLimit;
