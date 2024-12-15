@@ -546,24 +546,24 @@ input:focus {
     background: linear-gradient(45deg, #1e88e5, #1565</antArtifact>
     
 /* 배틀모드 보더 스타일 */
-.board-container #game-board.player-a-turn {
+.board#game-board.player-a-turn {
     border: 5px solid #ff4444 !important;
     box-shadow: 0 0 10px #ff4444;
 }
 
-.board-container #game-board.player-b-turn {
+.board#game-board.player-b-turn {
     border: 5px solid #4444ff !important;
     box-shadow: 0 0 10px #4444ff;
 }
 
 /* 배틀모드 점수 색상 */
-#player-a-score {
+.player-score#player-a-score {
     color: #ff4444 !important;
     font-weight: bold;
     text-shadow: 0 0 5px rgba(255, 68, 68, 0.3);
 }
 
-#player-b-score {
+.player-score#player-b-score {
     color: #4444ff !important;
     font-weight: bold;
     text-shadow: 0 0 5px rgba(68, 68, 255, 0.3);
