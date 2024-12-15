@@ -568,3 +568,23 @@ input:focus {
     font-weight: bold;
     text-shadow: 0 0 5px rgba(68, 68, 255, 0.3);
 }
+
+/* 게임 화면 내의 보드 테두리 스타일 */
+#game-screen .board-container .board.player-a-turn {
+    border: 5px solid #ff4444 !important;
+}
+
+#game-screen .board-container .board.player-b-turn {
+    border: 5px solid #4444ff !important;
+}
+
+/* 점수 패널 스타일 */
+.score-panel #player-a-score {
+    color: #ff4444 !important;
+    font-weight: bold;
+}
+
+.score-panel #player-b-score {
+    color: #4444ff !important;
+    font-weight: bold;
+}
