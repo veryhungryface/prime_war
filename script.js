@@ -383,7 +383,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // 게임보드 테두리 색상 업데이트
         const board = document.getElementById('game-board');
+        // 모든 턴 관련 클래스 제거
         board.classList.remove('player-a-turn', 'player-b-turn');
+        // 현재 플레이어의 턴 클래스 추가
         board.classList.add(`player-${gameState.currentPlayer.toLowerCase()}-turn`);
     }
 
