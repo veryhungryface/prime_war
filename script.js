@@ -311,11 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 모든 셀이 클릭된 상태이면 no prime 처리 호출
         handleNoMorePrimes();
     } else {
-        // 아직 클릭되지 않은 셀 중 소수가 있는지 확인
-        const unclickedPrimes = gameState.numbers.filter(n => gameState.primeMap[n] && !gameState.clicked.has(n));
-        // 더 이상 찾을 수 있는 소수가 없다면 자동으로 no prime 처리
-        if (unclickedPrimes.length === 0) {
-            handleNoMorePrimes();
+        
         }
     }
 }
