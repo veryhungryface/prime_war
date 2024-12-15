@@ -277,38 +277,48 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 
     function handleCellClick(cell, num) {
-        if (!gameState.active || gameState.clicked.has(num)) return;
-        
-        gameState.clicked.add(num);
-        
-        if (gameState.primeMap[num]) {
-            cell.style.backgroundColor = '#0066cc';
-            if (gameState.mode === 'single') {
-                gameState.score += 10;
-            } else {
-                if (gameState.currentPlayer === 'A') {
-                    gameState.playerAScore += 10;
-                } else {
-                    gameState.playerBScore += 10;
-                }
-            }
-            cell.classList.add('found-prime');
+    if (!gameState.active || gameState.clicked.has(num)) return;
+    
+    gameState.clicked.add(num);
+    
+    if (gameState.primeMap[num]) {
+        cell.style.backgroundColor = '#0066cc';
+        if (gameState.mode === 'single') {
+            gameState.score += 10;
         } else {
-            cell.style.backgroundColor = '#cc0000';
-            if (gameState.mode === 'single') {
-                gameState.hearts--;
+            if (gameState.currentPlayer === 'A') {
+                gameState.playerAScore += 10;
             } else {
-                switchPlayer();
+                gameState.playerBScore += 10;
             }
         }
-        
-        updateGameUI();
-        resetTimer();
-        
-        if (gameState.mode === 'single' && gameState.hearts <= 0) {
-            endGame();
+        cell.classList.add('found-prime');
+    } else {
+        cell.style.backgroundColor = '#cc0000';
+        if (gameState.mode === 'single') {
+            gameState.hearts--;
+        } else {
+            switchPlayer();
         }
     }
+    
+    updateGameUI();
+    resetTimer();
+    
+    // 모든 셀이 클릭되었는지 확인
+    const totalCells = gameState.boardSize * gameState.boardSize;
+    if (gameState.clicked.size === totalCells) {
+        // 모든 셀이 클릭된 상태이면 no prime 처리 호출
+        handleNoMorePrimes();
+    } else {
+        // 아직 클릭되지 않은 셀 중 소수가 있는지 확인
+        const unclickedPrimes = gameState.numbers.filter(n => gameState.primeMap[n] && !gameState.clicked.has(n));
+        // 더 이상 찾을 수 있는 소수가 없다면 자동으로 no prime 처리
+        if (unclickedPrimes.length === 0) {
+            handleNoMorePrimes();
+        }
+    }
+}
 
     function switchPlayer() {
     gameState.currentPlayer = gameState.currentPlayer === 'A' ? 'B' : 'A';
