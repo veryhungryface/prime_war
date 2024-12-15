@@ -309,7 +309,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalCells = gameState.boardSize * gameState.boardSize;
     if (gameState.clicked.size === totalCells) {
         // 모든 셀이 클릭된 상태이면 no prime 처리 호출
-        handleNoMorePrimes();
+        setTimeout(() => {
+            handleNoMorePrimes();
+        }, 1000); // 1초 딜레이
     } else {
         
         }
