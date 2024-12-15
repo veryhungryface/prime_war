@@ -428,12 +428,28 @@ document.addEventListener('DOMContentLoaded', () => {
     gameState.active = false;
     if (gameState.timer) clearInterval(gameState.timer);
     
+    // final-score 요소의 부모( .final-score )에 접근
+    const finalScoreContainer = gameElements.finalScore.parentNode;
+
     if (gameState.mode === 'single') {
+        // 싱글 모드에서는 SCORE: 표시
+        // 우선 SCORE: 문구가 없을 경우를 대비, 혹시 비어있으면 다시 채워줍니다.
+        // childNodes[0]가 텍스트 노드를 가리키며 여기에서 'SCORE: '를 설정
+        if (finalScoreContainer.childNodes[0]) {
+            finalScoreContainer.childNodes[0].textContent = 'SCORE: ';
+        } else {
+            finalScoreContainer.insertBefore(document.createTextNode('SCORE: '), gameElements.finalScore);
+        }
+        
         gameElements.finalScore.textContent = gameState.score;
         checkAndSaveHighScore(gameState.score);
     } else {
-        // 배틀 모드에서는 서버 저장 X
-        // RED, BLUE 최종 점수 표시
+        // 배틀 모드에서는 SCORE: 문구 제거
+        if (finalScoreContainer.childNodes[0]) {
+            finalScoreContainer.childNodes[0].textContent = '';
+        }
+
+        // 승패 결과
         let resultText;
         if (gameState.playerAScore > gameState.playerBScore) {
             resultText = "RED Wins!";
@@ -442,13 +458,13 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             resultText = "Draw!";
         }
-        
+
         const battleResult = document.getElementById('battle-result');
         battleResult.textContent = resultText;
         battleResult.className = 'battle-result ' + 
             (resultText === "Draw!" ? 'draw' : 'winner');
 
-        // 최종 점수를 RED BLUE 표시
+        // 배틀모드 최종점수 표시 (SCORE:와 vs 제거)
         gameElements.finalScore.textContent = `RED: ${gameState.playerAScore} BLUE: ${gameState.playerBScore}`;
     }
     
