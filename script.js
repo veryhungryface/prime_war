@@ -11,14 +11,17 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const buttons = {
-        singleMode: document.getElementById('single-mode-button'),
-        battleMode: document.getElementById('battle-mode-button'),
-        startSingleGame: document.getElementById('start-single-game-button'),
-        startBattleGame: document.getElementById('start-battle-game-button'),
-        noMorePrimes: document.getElementById('no-more-primes-btn'),
-        restart: document.getElementById('restart-button'),
-        clearRecords: document.getElementById('clear-records-button')
-    };
+    singleMode: document.getElementById('single-mode-button'),
+    battleMode: document.getElementById('battle-mode-button'),
+    startSingleGame: document.getElementById('start-single-game-button'),
+    startBattleGame: document.getElementById('start-battle-game-button'),
+    noMorePrimes: document.getElementById('no-more-primes-btn'),
+    restart: document.getElementById('restart-button'),
+    // 관리자모드 버튼을 start 화면에 추가한 것에 따른 변수 추가
+    adminMode: document.getElementById('admin-mode-button'),
+    // 홈화면 버튼 변수 추가
+    homeButton: document.getElementById('home-button')
+};
 
     const modeButtons = document.querySelectorAll('.mode-btn');
     modeButtons.forEach(btn => {
@@ -112,6 +115,10 @@ document.addEventListener('DOMContentLoaded', () => {
         battleSettings.rangeStartSelect.addEventListener('change', () => {
             populateEndOptions(parseInt(battleSettings.rangeStartSelect.value), battleSettings.rangeEndSelect);
         });
+        
+        buttons.adminMode.addEventListener('click', handleClearRecords);
+buttons.homeButton.addEventListener('click', () => {
+    showScreen('start');
     }
     
     function showScreen(screenName) {
