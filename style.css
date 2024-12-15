@@ -546,12 +546,12 @@ input:focus {
     background: linear-gradient(45deg, #1e88e5, #1565</antArtifact>
     
 /* 배틀모드 보더 스타일 */
-#game-board.player-a-turn {
+.board-container #game-board.player-a-turn {
     border: 5px solid #ff4444 !important;
     box-shadow: 0 0 10px #ff4444;
 }
 
-#game-board.player-b-turn {
+.board-container #game-board.player-b-turn {
     border: 5px solid #4444ff !important;
     box-shadow: 0 0 10px #4444ff;
 }
