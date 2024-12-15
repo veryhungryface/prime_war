@@ -227,8 +227,26 @@ button#start-game-button:hover {
     border-radius: 8px;
 }
 
-.hearts, .timer, .score-panel {
+.hearts, .timer {
     font-size: 1.5rem;
+}
+
+.round-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 중앙 정렬 */
+    font-size: 1.2rem;
+    font-weight: bold; /* 볼드체 적용 */
+    color: #fff;
+    text-align: center;
+}
+
+.score-panel {
+    display: flex;
+    justify-content: flex-end; /* 좌우로 간격 조정 */
+    align-items: center; /* 세로 가운데 정렬 */
+    gap: 1rem; /* 두 점수 사이 간격 */
+    font-size: 1.5rem; /* 점수 크기 조정 */
 }
 
 .board-container {
@@ -570,5 +588,26 @@ input:focus {
 #game-screen .info-panel .single-score-container div#score {
     color: #ff4444 !important;
     font-weight: bold;
+    font-size: 1.5em;
     text-shadow: 0 0 5px rgba(255, 68, 68, 0.3);
+    justify-content: flex-end;
+}
+
+.timer-bar-container {
+    width: 95%; /* info-panel과 같은 가로 너비 */
+    max-width: 600px; /* 게임판과 동일한 최대 너비 */
+    height: 10px; /* 타이머 바 높이 */
+    background-color: #444; /* 배경색 */
+    border-radius: 5px;
+    margin: 10px auto; /* 위아래 간격 */
+    position: relative;
+    overflow: hidden;
+}
+
+.timer-bar {
+    width: 100%; /* 초기 너비 */
+    height: 100%; /* 전체 높이 */
+    background-color: white; /* 초기 흰색 */
+    transition: width 1s linear, background-color 0.3s ease; /* 너비와 색상 전환 효과 */
+    border-radius: 5px;
 }
