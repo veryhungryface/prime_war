@@ -253,24 +253,56 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function createBoard() {
-        const board = document.getElementById('game-board');
-        board.innerHTML = '';
-        board.style.gridTemplateColumns = `repeat(${gameState.boardSize}, 1fr)`;
-        board.style.gridTemplateRows = `repeat(${gameState.boardSize}, 1fr)`;
+    const board = document.getElementById('game-board');
+    board.innerHTML = '';
+    board.style.gridTemplateColumns = `repeat(${gameState.boardSize}, 1fr)`;
+    board.style.gridTemplateRows = `repeat(${gameState.boardSize}, 1fr)`;
 
-        gameState.numbers.forEach(num => {
-            const cell = document.createElement('div');
-            cell.className = 'cell';
-            cell.textContent = num;
-            cell.addEventListener('click', () => handleCellClick(cell, num));
-            board.appendChild(cell);
-        });
+    gameState.numbers.forEach(num => {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        cell.textContent = num;
 
-        if (gameState.mode === 'battle') {
-            board.classList.remove('player-a-turn', 'player-b-turn');
-            board.classList.add(`player-${gameState.currentPlayer.toLowerCase()}-turn`);
-        }
+        // 이벤트 리스너 추가
+        cell.addEventListener('click', () => handleCellClick(cell, num));
+
+        board.appendChild(cell);
+    });
+
+    if (gameState.mode === 'battle') {
+        board.classList.remove('player-a-turn', 'player-b-turn');
+        board.classList.add(`player-${gameState.currentPlayer.toLowerCase()}-turn`);
     }
+
+    requestAnimationFrame(() => {
+        adjustFontSizes();
+    });
+}
+
+function adjustFontSizes() {
+    const board = document.getElementById('game-board');
+    const cells = board.querySelectorAll('.cell');
+
+    let minFontSize = Infinity;
+
+    // 1차 순회: 각 셀별 폰트 크기 계산 후 최소값 찾기
+    cells.forEach(cell => {
+        const text = cell.textContent.trim();
+        const digitCount = text.length;
+        const cellWidth = cell.offsetWidth;
+
+        // 자릿수에 맞는 폰트 크기 계산
+        const fontSize = Math.floor((cellWidth / digitCount) * 0.8);
+        if (fontSize < minFontSize) {
+            minFontSize = fontSize;
+        }
+    });
+
+    // 모든 셀에 최소 폰트 크기 적용
+    cells.forEach(cell => {
+        cell.style.fontSize = minFontSize + 'px';
+    });
+}
 
     function handleCellClick(cell, num) {
         if (!gameState.active || gameState.clicked.has(num)) return;
@@ -293,6 +325,10 @@ document.addEventListener('DOMContentLoaded', () => {
             cell.style.backgroundColor = '#cc0000';
             if (gameState.mode === 'single') {
                 gameState.hearts--;
+                if (gameState.hearts <= 0) {
+                    endGame();
+                    return; // endGame 호출 후 함수 종료
+                }
             } else {
                 switchPlayer();
             }
@@ -304,9 +340,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalCells = gameState.boardSize * gameState.boardSize;
         const allClicked = (gameState.clicked.size === totalCells);
         const unclickedPrimes = gameState.numbers.filter(n => gameState.primeMap[n] && !gameState.clicked.has(n));
-        const noUnclickedPrimes = (unclickedPrimes.length === 0);
 
-        if (allClicked || noUnclickedPrimes) {
+        if (allClicked) {
             setTimeout(() => {
                 handleNoMorePrimes();
             }, 1000); 
@@ -353,7 +388,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             if (gameState.mode === 'single') {
                 gameState.hearts--;
-                if (gameState.hearts <= 0) endGame();
+                if (gameState.hearts <= 0) {
+                    endGame();
+                    return; // endGame 호출 후 함수 종료
+                 }
             } else {
                 switchPlayer();
             }
