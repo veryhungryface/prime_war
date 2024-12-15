@@ -255,23 +255,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function createBoard() {
-        gameElements.board.innerHTML = '';
-        gameElements.board.style.gridTemplateColumns = `repeat(${gameState.boardSize}, 1fr)`;
-        gameElements.board.style.gridTemplateRows = `repeat(${gameState.boardSize}, 1fr)`;
+    const board = document.getElementById('game-board');
+    board.innerHTML = '';
+    board.style.gridTemplateColumns = `repeat(${gameState.boardSize}, 1fr)`;
+    board.style.gridTemplateRows = `repeat(${gameState.boardSize}, 1fr)`;
 
-        gameState.numbers.forEach(num => {
-            const cell = document.createElement('div');
-            cell.className = 'cell';
-            cell.textContent = num;
-            cell.addEventListener('click', () => handleCellClick(cell, num));
-            gameElements.board.appendChild(cell);
-        });
+    gameState.numbers.forEach(num => {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        cell.textContent = num;
+        cell.addEventListener('click', () => handleCellClick(cell, num));
+        board.appendChild(cell);
+    });
 
-        // 배틀모드에서 현재 플레이어 표시
-        if (gameState.mode === 'battle') {
-            gameElements.board.className = `board player-${gameState.currentPlayer.toLowerCase()}-turn`;
-        }
+    if (gameState.mode === 'battle') {
+        // 먼저 모든 player 클래스 제거
+        board.classList.remove('player-a-turn', 'player-b-turn');
+        // 현재 플레이어에 해당하는 클래스 추가
+        board.classList.add(`player-${gameState.currentPlayer.toLowerCase()}-turn`);
     }
+}
 
     function handleCellClick(cell, num) {
         if (!gameState.active || gameState.clicked.has(num)) return;
@@ -308,12 +311,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function switchPlayer() {
-        gameState.currentPlayer = gameState.currentPlayer === 'A' ? 'B' : 'A';
-        updateGameUI();
-        
-        // 보드 테두리 색상 변경
-        gameElements.board.className = `board player-${gameState.currentPlayer.toLowerCase()}-turn`;
-    }
+    gameState.currentPlayer = gameState.currentPlayer === 'A' ? 'B' : 'A';
+    const board = document.getElementById('game-board');
+    board.classList.remove('player-a-turn', 'player-b-turn');
+    board.classList.add(`player-${gameState.currentPlayer.toLowerCase()}-turn`);
+    updateGameUI();
+}
 
     function handleNoMorePrimes() {
         if (!gameState.active) return;
@@ -378,11 +381,11 @@ document.addEventListener('DOMContentLoaded', () => {
         gameElements.playerBScore.style.display = 'block';
         gameElements.roundInfo.textContent = `Round ${gameState.currentRound}/${gameState.rounds}`;
         
-        // 플레이어 점수 업데이트
-        document.getElementById('player-a-score').textContent = `RED: ${gameState.playerAScore}`;
-        document.getElementById('player-b-score').textContent = `BLUE: ${gameState.playerBScore}`;
+        // 점수 업데이트
+        gameElements.playerAScore.textContent = `RED: ${gameState.playerAScore}`;
+        gameElements.playerBScore.textContent = `BLUE: ${gameState.playerBScore}`;
         
-        // 게임보드 테두리 색상 업데이트
+        // 보드 테두리 색상 업데이트
         const board = document.getElementById('game-board');
         board.classList.remove('player-a-turn', 'player-b-turn');
         board.classList.add(`player-${gameState.currentPlayer.toLowerCase()}-turn`);
