@@ -412,11 +412,14 @@ function adjustFontSizes() {
         if (gameState.mode === 'single') {
             gameElements.hearts.style.display = 'block';
             gameElements.roundInfo.style.display = 'none';
+            gameElements.score.style.display = 'block';
+            gameElements.score.textContent = `Score: ${gameState.score}`;
+            gameElements.hearts.textContent = '❤️'.repeat(gameState.hearts);
             gameElements.playerAScore.style.display = 'none';
             gameElements.playerBScore.style.display = 'none';
-            gameElements.hearts.textContent = '❤️'.repeat(gameState.hearts);
         } else {
             gameElements.hearts.style.display = 'none';
+            gameElements.score.style.display = 'none';
             gameElements.roundInfo.style.display = 'block';
             gameElements.playerAScore.style.display = 'block';
             gameElements.playerBScore.style.display = 'block';
