@@ -314,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         }
     }
-}
+
 
     function switchPlayer() {
     gameState.currentPlayer = gameState.currentPlayer === 'A' ? 'B' : 'A';
