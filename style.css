@@ -1,3 +1,4 @@
+
 /* 기본 스타일 초기화 */
 * {
     margin: 0;
@@ -540,7 +541,28 @@ input:focus {
     z-index: 1200;
 }
 
-/* 게임 화면 내의 보드 테두리 스타일과 점수 패널 */
-#game-screen div.board-container div.board#game-board.player-a-turn {
+/* 게임 화면 내의 보드 테두리 스타일과 점수 패널 스타일 */
+/* RED 플레이어 스타일 */
+#game-screen div.board-container div#game-board.player-a-turn {
     border: 5px solid #ff4444 !important;
-    box-shadow:
+    box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+}
+
+/* BLUE 플레이어 스타일 */
+#game-screen div.board-container div#game-board.player-b-turn {
+    border: 5px solid #4444ff !important;
+    box-shadow: 0 0 10px rgba(68, 68, 255, 0.5);
+}
+
+/* 점수 패널 스타일 - 더 구체적인 선택자 사용 */
+#game-screen .info-panel .score-panel div#player-a-score {
+    color: #ff4444 !important;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(255, 68, 68, 0.3);
+}
+
+#game-screen .info-panel .score-panel div#player-b-score {
+    color: #4444ff !important;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(68, 68, 255, 0.3);
+}
